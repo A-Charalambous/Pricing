@@ -1,0 +1,15 @@
+# In the Bachelier model the asset prices are normal, hence possible to have negative asset values. In the Black Scholes they are log-normal.
+# Mainly applied in the rates and commodity markets.
+# dS = rSdt+σdW (the diffusion term doesn't depend on S)
+# Call_option = exp(−rT)σ√T*(d+Φ(d+) + ϕ(d+))     ,   Φ is the CDF of the standard normal distribution, and  ϕ is the PDF of the standard normal distribution.
+# d_plus = S0 * exp( r*T − K) / [σ * √T]     ,  d_minus = −d_plus
+
+import numpy as np
+from scipy . stats import norm
+
+def bachelier_call (S_0 ,K,T,sigma ,r):
+ d_plus = (S_0 *np.exp (r*T) - K)/( sigma *np. sqrt (T))
+ return np.exp(-r*T)* sigma *np. sqrt (T)*( d_plus * norm .cdf ( d_plus ) + norm .pdf ( d_plus ))
+
+print ( bachelier_call_option (S_0 = 100 , K = 110 , T = 2 , sigma = 30, r =0.06) )
+# ans = 16.262630958842923
