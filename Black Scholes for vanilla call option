@@ -1,6 +1,8 @@
 import numpy as np
 from scipy.stats import norm
 
+# BS formula for a European style Call option 
+
 def bs_call (S_0 ,K,T,sigma, r):
  d_1 = (np.log(S_0/K) + T*(r + ( sigma **2) /2))/( sigma *np. sqrt (T))
  d_2 = d_1 - sigma *np. sqrt (T)
@@ -13,14 +15,11 @@ def bs_call (S_0 ,K,T,sigma, r):
 print ( bs_call (S_0 = 100 , K = 110 , T = 1 , sigma = 0.2 , r = 0.05) )
 # C(S_T,T) = 6.040088129724239
 
-def get_implied_vol_bs (S_0 ,K,T,r, observed_px , initial_guess ):
-  root_fn = lambda x: bs_call (S_0 ,K,T,x,r) - observed_px
-  return root ( root_fn , initial_guess )[’x’][0]
 
 
 
 
-# Implied volatility function
+# Implied BS volatility function
 
 def implied_vol_bs (S_0 ,K,T,r, observed_px , initial_guess ):  
   obj_fn = lambda x: bs_call (S_0 ,K,T,x,r) - observed_px
@@ -35,6 +34,7 @@ print ( implied_vol_bs (S_0 = 100 , K = 110 , T = 1 , r = 0.05, observed_px = 6.
 
 # The solution from the root function is represented as a OptimizeResult object, containing x which is the solution array.
 # To filter for the variable x from the OptimizeResult object, we use ['x'], similarly to how we can access a value in a dictionary by key.
+# Example:
 # thisdict =	{
 #  "brand": "Ford",
 #  "model": "Mustang",
