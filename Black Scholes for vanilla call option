@@ -12,3 +12,32 @@ def bs_call (S_0 ,K,T,sigma, r):
 
 print ( bs_call (S_0 = 100 , K = 110 , T = 1 , sigma = 0.2 , r = 0.05) )
 # C(S_T,T) = 6.040088129724239
+
+def get_implied_vol_bs (S_0 ,K,T,r, observed_px , initial_guess ):
+  root_fn = lambda x: bs_call (S_0 ,K,T,x,r) - observed_px
+  return root ( root_fn , initial_guess )[’x’][0]
+
+
+
+
+# Implied volatility function
+
+def implied_vol_bs (S_0 ,K,T,r, observed_px , initial_guess ):  
+  obj_fn = lambda x: bs_call (S_0 ,K,T,x,r) - observed_px
+  return root ( obj_fn , initial_guess )   # The root function from scipy will optimize obj_fn by verying the value of volatility (x). 
+                                           # The initial_guess for volatility is provided, and will be fed to obj_fn via the lambda function.
+                                           # The function passed to root should always be written to accept the variables to be adjusted as its arguments.    
+                                           # By using the lambda function we define the single variable to be adjusted, which is volatility (x).
+
+print ( implied_vol_bs (S_0 = 100 , K = 110 , T = 1 , r = 0.05, observed_px = 6.040088129724239, initial_guess = 0.7 )['x']  )
+# σ = [0.2]
+
+
+# The solution from the root function is represented as a OptimizeResult object, containing x which is the solution array.
+# To filter for the variable x from the OptimizeResult object, we use ['x'], similarly to how we can access a value in a dictionary by key.
+# thisdict =	{
+#  "brand": "Ford",
+#  "model": "Mustang",
+#  "year": 1964
+# }
+# print(thisdict["year"]) = 1964
