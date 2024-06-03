@@ -15,7 +15,7 @@ def bs_call (S_0 ,K,T,sigma, r):
 print ( bs_call (S_0 = 100 , K = 110 , T = 1 , sigma = 0.2 , r = 0.05) )
 # C(S_T,T) = 6.040088129724239
 
-
+ 
 
 
 
